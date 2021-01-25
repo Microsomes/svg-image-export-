@@ -110,13 +110,10 @@ async function generateBatch({
            generatedPNGID:generatedPNGID
        })
 
-       console.log(finalImage)
-
-       const contents = fs.readFileSync(finalImage, {encoding: 'base64'});
-       fs.readFileSync("res.txt",contents,(err)=>{})
+       await page.waitForTimeout(100);
 
         
-
+       resolve("tmp/02d_batch_resized"+generatedPNGID+".png")
         await browser.close();
     })
 }
@@ -135,6 +132,7 @@ generateBatch({
     ]
 }).then(batch=>{
     console.log(batch)
+    fs.writeFileSync("res.txt",batch,(err=>{}))
 }).catch(err=>{
     console.log("error")
 })
