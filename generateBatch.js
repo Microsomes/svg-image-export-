@@ -131,8 +131,17 @@ generateBatch({
 
     ]
 }).then(batch=>{
-    console.log(batch)
-    fs.writeFileSync("res.txt",batch,(err=>{}))
+    var bitmap = fs.readFileSync(batch);
+
+    // Remove the non-standard characters
+    var tmp  = bitmap.toString().replace(/[“”‘’]/g,'');
+
+    // Create a buffer from the string and return the results
+    var b64=new Buffer(tmp).toString('base64');
+
+    fs.writeFileSync("res.txt","data:image/png;base64,"+b64,(err)=>{})
+
+    
 }).catch(err=>{
     console.log("error")
 })
